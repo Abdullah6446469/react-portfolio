@@ -1,36 +1,37 @@
-import { useEffect, useState } from 'react'
-import Loader from 'react-loaders'
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
-import { useRef } from 'react'
-import emailjs from '@emailjs/browser'
-import AnimatedLetters from '../AnimatedLetters'
-import './index.scss'
-
+import React, { useEffect, useState } from 'react';
+import Loader from 'react-loaders';
+import AnimatedLetters from '../AnimatedLetters';
+import './index.scss';
+import emailjs from '@email/browser';  
+import { useRef } from 'react';
 const Contact = () => {
-  const [letterClass, setLetterClass] = useState('text-animate')
-  const form = useRef()
+  const [letterClass, setLetterClass] = useState('text-animate');
+  const form = useRef();
 
   useEffect(() => {
-    return setTimeout(() => {
-      setLetterClass('text-animate-hover')
-    }, 3000)
-  }, [])
+    const timeout = setTimeout(() => {
+      setLetterClass('text-animate-hover');
+    }, 3000);
+    return () => clearTimeout(timeout); // Cleanup the timeout on unmount
+  }, []);
 
   const sendEmail = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     emailjs
-      .sendForm('gmail', 'template_YeJhZkgb', form.current, 'your-token')
+      .sendForm(
+        'survice_6446469', 'template_sbhvllq', form.current, '9Q5VEJ4i8Po8Bn57w'      
+      )
       .then(
         () => {
-          alert('Message successfully sent!')
-          window.location.reload(false)
+          alert('Message successfully sent!');
+          window.location.reload(false);
         },
-        () => {
-          alert('Failed to send the message, please try again')
-        }
-      )
-  }
+      (error) => {
+        console.error('Error sending email:', error);
+        alert('Failed to send the message, please try again');
+      });
+  };
 
   return (
     <>
@@ -46,36 +47,26 @@ const Contact = () => {
           <p>
             I am interested in freelance opportunities - especially on ambitious
             or large projects. However, if you have any other requests or
-            questions, don't hesitate to contact me using below form either.
+            questions, don't hesitate to contact me using the form below.
           </p>
           <div className="contact-form">
             <form ref={form} onSubmit={sendEmail}>
               <ul>
                 <li className="half">
-                  <input placeholder="Name" type="text" name="name" required />
+                  <label>Name</label>
+                  <input placeholder="Name" type="text" name="form_name" required />
                 </li>
                 <li className="half">
-                  <input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    required
-                  />
+                  <label>Email</label>
+                  <input placeholder="Email" type="email" name="form_email" required />
                 </li>
                 <li>
-                  <input
-                    placeholder="Subject"
-                    type="text"
-                    name="subject"
-                    required
-                  />
+                  <label>Subject</label>
+                  <input placeholder="Subject" type="text" name="subject" required />
                 </li>
                 <li>
-                  <textarea
-                    placeholder="Message"
-                    name="message"
-                    required
-                  ></textarea>
+                  <label>Message</label>
+                  <textarea placeholder="Message" name="message" required></textarea>
                 </li>
                 <li>
                   <input type="submit" className="flat-button" value="SEND" />
@@ -85,27 +76,12 @@ const Contact = () => {
           </div>
         </div>
         <div className="info-map">
-          Slobodan Gajić,
-          <br />
-          Serbia,
-          <br />
-          Branka RadiČevića 19, 22000 <br />
-          Sremska Mitrovica <br />
-          <br />
-          <span>freelancerslobodan@gmail.com</span>
-        </div>
-        <div className="map-wrap">
-          <MapContainer center={[44.96366, 19.61045]} zoom={13}>
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <Marker position={[44.96366, 19.61045]}>
-              <Popup>Sloba lives here, come over for a cup of coffee :)</Popup>
-            </Marker>
-          </MapContainer>
+          {/* Rest of the info and map content */}
         </div>
       </div>
       <Loader type="pacman" />
     </>
-  )
-}
+  );
+};
 
-export default Contact
+export default Contact;

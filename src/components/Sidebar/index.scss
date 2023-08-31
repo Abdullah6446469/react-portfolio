@@ -9,19 +9,26 @@
 
   .logo {
     display: block;
-    padding: 8px 0;
-
+    padding: 0;
+  
     img {
+      padding-top: 8;
       display: block;
-      margin: 8px auto;
+      margin: 10px 0 auto;
+      margin-left: 12px;
+      margin-right: 8px;
       width: 36px;
       height: auto;
-
+  
       &.sub-logo {
         width: 60px;
+        display: block;
+        margin: 0 auto;
+        margin-top: -4px; /* Adjust this value to control the closeness */
       }
     }
   }
+  
 
   nav {
     display: block;
